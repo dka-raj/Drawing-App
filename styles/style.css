@@ -1,0 +1,78 @@
+body {
+  margin: 0;
+  width: 100vw;
+  height: 100vh;
+  --toolWidth: 10vw;
+  --statusHeight: 18px;
+  --toolFloat: left;
+  --brushWidth: 25px;
+  --bg: #171717;
+  --fg: #fff;
+  --bg2: #2f2f2f;
+  --sep: rgba(0, 0, 0, 0.438);
+  --inactive: #616161;
+  --cursor: crosshair;
+  overflow: hidden;
+  background: var(--bg);
+}
+#paper {
+  width: calc(100% - var(--toolWidth));
+  height: calc(100% - var(--statusHeight));
+  overflow: hidden;
+}
+canvas#drawingArea {
+  border-color: var(--fg);
+  touch-action: none;
+  cursor: var(--cursor);
+}
+
+#toolBar {
+  width: var(--toolWidth);
+  height: calc(100% - var(--statusHeight));
+  background: var(--bg2);
+  float: var(--toolFloat);
+}
+#statusBar {
+  width: 100%;
+  height: var(--statusHeight);
+  background: #0081ff;
+  float: left;
+}
+#undoBtn,
+#redoBtn {
+  width: calc(50% - 1px);
+  height: 17.5px;
+  border-style: none;
+  border-color: var(--sep);
+  border-width: 0.5px;
+}
+.do {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  fill: var(--inactive);
+  background: rgba(0, 88, 202, 0.185);
+}
+#undoBtn {
+  float: left;
+  border-right-style: solid;
+}
+#redoBtn {
+  float: right;
+  border-left-style: solid;
+}
+
+[data-tooltip]:before {
+  content: attr(data-tooltip);
+  position: absolute;
+  opacity: 0;
+  transition: all 0.75s ease;
+  color: #fff;
+  background: #000;
+  border: 1.5px solid #fff;
+  margin-top: 20px;
+  margin-left: 15%;
+}
+[data-tooltip]:hover:before {
+  opacity: 1;
+}
