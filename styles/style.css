@@ -1,5 +1,4 @@
 body {
-  margin: 0;
   width: 100vw;
   height: 100vh;
   --toolWidth: 10vw;
@@ -11,9 +10,14 @@ body {
   --bg2: #2f2f2f;
   --sep: rgba(0, 0, 0, 0.438);
   --inactive: #616161;
-  --cursor: crosshair;
+  --cursor: cell;
   overflow: hidden;
   background: var(--bg);
+}
+*{
+  margin: 0;
+  padding: 0;
+  user-select: none;
 }
 #paper {
   width: calc(100% - var(--toolWidth));
@@ -32,6 +36,20 @@ canvas#drawingArea {
   background: var(--bg2);
   float: var(--toolFloat);
 }
+.btn{
+  color: var(--fg);
+  opacity: .95;
+  width: 100%;
+  border-style: none;
+  height: 5%;
+  bottom: 0;
+}
+.clearCanvas.btn{background: red;}
+.downloadImg.btn{background: #0e52e6;}
+object{
+  height: 15px;
+  width: 15px;
+}
 #statusBar {
   width: 100%;
   height: var(--statusHeight);
@@ -41,7 +59,7 @@ canvas#drawingArea {
 #undoBtn,
 #redoBtn {
   width: calc(50% - 1px);
-  height: 17.5px;
+  height: 15px;
   border-style: none;
   border-color: var(--sep);
   border-width: 0.5px;

@@ -6,6 +6,8 @@ const canvas = document.querySelector("canvas"),
     paper = document.getElementById("paper"),
     undoBtn = document.getElementById("undoBtn"),
     redoBtn = document.getElementById("redoBtn"),
+    clearBtn = document.querySelector(".clearCanvas.btn"),
+    downloadImgBtn = document.querySelector(".downloadImg.btn"),
     user = {
         isDrawing: false,
     },
@@ -61,6 +63,20 @@ function redo() {
     };
     image.src = history.data[history.index + 1];
 }
+function clearCanvas() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height)
+    undoBtn.children[0].style.fill = "var(--inactive)"
+    redoBtn.children[0].style.fill = "var(--inactive)"
+    history.data = []
+    history.index = -1
+}
+function downloadImg() {
+    let link=document.createElement("a")
+    let date=new Date()
+    link.href=canvas.toDataURL()
+    link.download=`painting on ${date.toISOString().slice(0,10)} at ${date.toLocaleTimeString()}.png`
+    link.click()
+}
 function getPos(e) {
     if (e.type === "touch") {
         return {
@@ -97,7 +113,7 @@ function stop() {
     user.isDrawing = false;
     ctx.beginPath();
     // save history
-    undoBtn.children[0].style.fill = "var(--fg)";
+    (history.data.length != 0) && (undoBtn.children[0].style.fill = "var(--fg)")
     redoBtn.children[0].style.fill = "var(--inactive)";
     ((history.data.length - 1) > history.index) && (history.data = history.data.slice(0, history.index + 1))
     history.data.push(canvas.toDataURL());
@@ -109,10 +125,15 @@ addEventListener("resize", resize);
 canvas.addEventListener("pointerdown", start);
 canvas.addEventListener("pointermove", draw);
 addEventListener("pointerup", stop);
-canvas.addEventListener("mouseout", () => { ctx.beginPath() });
-// undo redo
+canvas.addEventListener("mouseout", (e) => {
+    draw(e)
+    ctx.beginPath()
+});
 undoBtn.addEventListener("click", undo);
 redoBtn.addEventListener("click", redo);
+
+clearBtn.addEventListener("click",clearCanvas)
+downloadImgBtn.addEventListener("click", downloadImg)
 // blocking context menu
 addEventListener("contextmenu", (e) => {
     e.preventDefault();
@@ -120,4 +141,4 @@ addEventListener("contextmenu", (e) => {
 
 // at starting
 resize();
-document.body.style.setProperty("--cursor", `url(../assets/images/${defSettings.pointers[settings.mode][0]}) 2 21, cell`)
+document.body.style.setProperty("--cursor", `url(../assets/images/cursors/${defSettings.pointers[settings.mode][0]}) 2 21, cell`)

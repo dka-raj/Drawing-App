@@ -2,7 +2,7 @@ const defSettings = {
     values: {
         mode: "pencil",
         brushType: "round",
-        color: "blue",
+        color: "#0022ff",
         color2: "red",
         size: 2.5
     },
