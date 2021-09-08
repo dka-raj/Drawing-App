@@ -1,13 +1,13 @@
-const defSettings = {
+const settings = Object.freeze({
     values: {
         mode: "pencil",
         brushType: "round",
-        color: "#0022ff",
+        color: "black",
         color2: "red",
-        size: 2.5
+        size: 7.5
     },
     pointers: {
-        pencil: ["pencil.svg", 20, 21],
-        paint: ["brush.svg", 1, 18]
+        pencil: "pencil.svg",
+        paint: "brush.svg"
     }
-}
+})

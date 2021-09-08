@@ -11,7 +11,7 @@
 
 <body>
     <div id="toolBar">
-        <div id="undoBtn" title="undo">
+        <div class="undoBtn doBtn" title="undo   (Ctrl+Z)">
             <svg class="undo do" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px"
                 fill="#000000">
                 <path d="M0 0h24v24H0V0z" fill="none" />
@@ -20,7 +20,7 @@
                 </path>
             </svg>
         </div>
-        <div id="redoBtn" title="redo">
+        <div class="redoBtn doBtn" title="redo   (Ctrl+Y)">
             <svg class="redo do" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px"
                 fill="#000000">
                 <path d="M0 0h24v24H0V0z" fill="none" />
@@ -29,15 +29,27 @@
             </svg>
             </path>
         </div>
-        <button class="clearCanvas btn"><object data="./assets/images/icons/white/reset.svg" type=""></object><b>Clear Canvas</b></button>
-        <button class="downloadImg btn"><object data="./assets/images/icons/white/file-download.svg" type=""></object><b>Download Image</b></button>
+        <button class="clearCanvas btn"><span>&#x27f3 clear</span></button>
+        <button class="downloadImg btn"><span>&#x1F4E5 download</span></button>
     </div>
     <div id="paper">
         <canvas id="drawingArea"></canvas>
     </div>
     <div id="statusBar"></div>
     <script src="./settings/settings.js"></script>
-    <script defer src="./backend/index.js"></script>
+    <script src="./backend/functions.js"></script>
+    <script defer src="./backend/values.js"></script>
+    <script defer src="./backend/main.js"></script>
+    <!-- <script defer>
+        let canvas2 = document.querySelector("canvas")
+        let x = canvas2.getContext("2d")
+        canvas2.addEventListener("mouseover", (e) => {
+            x.beginPath()
+            x.arc(e.offsetX, e.offsetY, 15, 0, Math.PI * 2)
+            x.fill()
+            console.log("e");
+        })
+    </script> -->
 </body>
 
 </html>
