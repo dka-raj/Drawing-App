@@ -20,7 +20,7 @@ function setPointer() {
   pointer &&
     document.body.style.setProperty(
       "--cursor",
-      `url(../assets/images/cursors/${pointer}), cell`
+      `url(/assets/images/cursors/${pointer}), cell`
     );
 }
 function undo() {
@@ -35,8 +35,8 @@ function undo() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.drawImage(image, 0, 0);
     history.index--;
-    history.index <= 0 && (undoBtn.classList.remove("active"))
-    redoBtn.classList.add("active")
+    history.index <= 0 && undoBtn.classList.remove("active");
+    redoBtn.classList.add("active");
   };
   image.src = history.data[history.index - 1];
 }
@@ -48,15 +48,15 @@ function redo() {
     ctx.drawImage(image, 0, 0);
     history.index++;
     history.index >= history.data.length - 1 &&
-      (redoBtn.classList.remove("active"))
-    undoBtn.classList.add("active")
+      redoBtn.classList.remove("active");
+    undoBtn.classList.add("active");
   };
   image.src = history.data[history.index + 1];
 }
 function clearCanvas() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  for(i=0;i<=1;i++){
-    doBtn[i].classList.remove("active")
+  for (i = 0; i <= 1; i++) {
+    doBtn[i].classList.remove("active");
   }
   history.data = [];
   history.index = -1;
@@ -74,26 +74,21 @@ function downloadImg() {
   link.click();
 }
 function getPos(e) {
-  if (e.type === "touch") {
-    return {
-      x: e.clientX - canvas.offsetLeft,
-      y: e.clientY - canvas.offsetTop,
-    };
-  }
   return {
     x: e.offsetX,
     y: e.offsetY,
   };
 }
 function start(e) {
-  if (user.isDrawing) return;
+  contextDiv.style.display = "none";
+  if (user.isDrawing || e.target !== canvas) return;
   user.isDrawing = true;
-  document.body.style.cursor="var(--cursor)"
+  document.body.style.cursor = "var(--cursor)";
   applySettings();
   let pos = getPos(e);
   e.button === 2 &&
-  settings.values.color2 &&
-  (ctx.strokeStyle = settings.values.color2);
+    settings.values.color2 &&
+    (ctx.strokeStyle = settings.values.color2);
   draw(null, pos);
 }
 function paint(x, y) {
@@ -103,29 +98,28 @@ function paint(x, y) {
   ctx.moveTo(x, y);
 }
 function draw(e, pos) {
-  if (!user.isDrawing) return;
+  if (e && e.srcElement.id !== "drawingArea") {
+    setPos(e);
+    return
+  }
   e && (pos = getPos(e));
+  if (!user.isDrawing) return;
   settings.values.mode === "pencil" && paint(pos.x, pos.y);
 }
 function stop() {
   if (!user.isDrawing) return;
   user.isDrawing = false;
-  document.body.style.cursor="default"
+  document.body.style.cursor = "default";
   ctx.beginPath();
   // save history
-  history.data.length != 0 && (undoBtn.classList.add("active"))
-  redoBtn.classList.remove("active")
+  history.data.length != 0 && undoBtn.classList.add("active");
+  redoBtn.classList.remove("active");
   history.data.length - 1 > history.index &&
     (history.data = history.data.slice(0, history.index + 1));
   history.data.push(canvas.toDataURL());
   history.index++;
 }
 function setPos(e) {
-  if (
-    e.srcElement.tagName.toLowerCase() === "canvas" &&
-    e.srcElement.id === "drawingArea"
-  )
-    return;
   user.entPos = {
     x: e.clientX - canvas.offsetLeft,
     y: e.clientY - canvas.offsetTop,
@@ -134,14 +128,18 @@ function setPos(e) {
 function out(e) {
   draw(e);
   ctx.beginPath();
-  addEventListener("mousemove", setPos);
 }
 function enter(e) {
-  removeEventListener("mousemove", setPos);
   draw(null, user.entPos);
 }
-function key() {
+function key(e) {
   if (!e.ctrlKey) return;
   e.key === "z" && undo();
   e.key === "y" && redo();
+}
+function contextMenu(e) {
+  if (!e.path.includes(toolBar)) return;
+  contextDiv.style.display = "block";
+  contextDiv.style.top = e.clientY + "px";
+  contextDiv.style.left = e.clientX + "px";
 }

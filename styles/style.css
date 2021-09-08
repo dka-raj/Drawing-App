@@ -3,7 +3,7 @@ body {
   height: 100vh;
   --toolWidth: 10vw;
   --statusHeight: 18px;
-  --toolFloat: right;
+  --toolFloat: left;
   --brushWidth: 25px;
   --bg: #171717;
   --fg: #fff;
@@ -133,4 +133,11 @@ canvas#drawingArea {
 .redoBtn {
   float: right;
   border-left-style: solid;
+}
+#contextMenu{
+  display: none;
+  width: 150px;
+  height: 300px;
+  background-color: red;
+  position: absolute;
 }

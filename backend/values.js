@@ -8,6 +8,7 @@ const canvas = document.querySelector("canvas"),
   redoBtn = document.querySelector(".redoBtn"),
   clearBtn = document.querySelector(".clearCanvas.btn"),
   downloadImgBtn = document.querySelector(".downloadImg.btn"),
+  contextDiv=document.getElementById("contextMenu"),
   user = {
     isDrawing: false,
     entPos:{}
