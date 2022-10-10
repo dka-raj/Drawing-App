@@ -20,7 +20,7 @@ function setPointer() {
   pointer &&
     document.body.style.setProperty(
       "--cursor",
-      `url(/assets/images/cursors/${pointer}), cell`
+      `url(https://dka-raj.github.io/drawing-app/assets/images/cursors/${pointer}), cell`
     );
 }
 function undo() {
